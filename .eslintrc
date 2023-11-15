@@ -1,0 +1,6 @@
+{
+  "plugins": ["perfectionist"],
+  "rules": {
+    "perfectionist/sort-interfaces": "error"
+  }
+}
