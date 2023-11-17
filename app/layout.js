@@ -1,7 +1,13 @@
+"use client";
+
 import "./globals.css";
 import classnames from "classnames";
 import { Kanit } from "next/font/google";
-import Link from "next/link";
+import { Layout } from "@/components";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { allReducers } from "../reducers";
+import { usePathname } from "next/navigation";
 
 const kanit = Kanit({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -10,30 +16,20 @@ const kanit = Kanit({
 });
 
 const RootLayout = ({ children }) => {
+  const pathname = usePathname();
+  const store = createStore(
+    allReducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+
   return (
     <html lang="en">
       <body className={classnames("", [kanit.className])}>
-        <header className="flex items-center justify-between pt-6 mb-6 mx-20">
-          <h1 className="font-extralight italic text-2xl">
-            U can put your logo here
-          </h1>
-
-          <div className="flex items-center justify-end font-medium italic text-lg">
-            <Link href="/" className="mr-4">
-              Home page
-            </Link>
-
-            <Link href="/tasks" className="mr-4">
-              Tasks page
-            </Link>
-
-            <Link href="/about">About page</Link>
-          </div>
-        </header>
-
-        <hr className="h-0 mb-5 border-b-1 border-black border-solid" />
-
-        <main className="mx-20">{children}</main>
+        <Provider store={store}>
+          <Layout pathname={pathname}>
+            <main className="mx-20">{children}</main>
+          </Layout>
+        </Provider>
       </body>
     </html>
   );
