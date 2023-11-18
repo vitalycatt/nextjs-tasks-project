@@ -41,13 +41,13 @@ const TasksPage = () => {
       <div className="flex justify-between items-center mb-5">
         <input
           type="text"
-          className="py-2 px-4 w-full mr-[1px] bg-inherit rounded-bl-md border-l border-b border-black border-solid text-lg font-normal -skew-x-12"
+          className="py-2 px-4 w-full mr-[1px] bg-inherit rounded-l rounded-bl-md border border-r-0 border-black border-solid text-lg font-normal -skew-x-12"
           {...register("todoCreator")}
         />
 
         <button
           type="submit"
-          className="px-[18px] py-[6px] rounded-r font-semibold italic text-base hover:underline"
+          className="px-[18px] py-[6px] h-[45px] ml-2 rounded-r rounded-br-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
         >
           Create
         </button>
@@ -64,14 +64,14 @@ const TasksPage = () => {
 
           <div className="group-hover:flex items-center justify-center hidden">
             <button
-              className="px-2 py-[6px] mr-2 font-semibold italic text-base hover:underline"
+              className="px-2 py-[6px] mr-2 rounded-l rounded-bl-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
               onClick={() => dispatch(updateTask(task, task.id))}
             >
               edit
             </button>
 
             <button
-              className="px-2 py-[6px] font-semibold italic text-base hover:underline"
+              className="px-2 py-[6px] rounded-r-md rounded-br-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
               onClick={() => dispatch(removeTask(task))}
             >
               del
