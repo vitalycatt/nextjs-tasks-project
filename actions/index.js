@@ -12,10 +12,19 @@ export const removeTask = (task) => {
   };
 };
 
-export const updateTask = (updatedTask, taskId) => {
+export const updateTask = (updatedTask) => {
   return {
     type: "UPDATE_TASK",
     updatedTask,
-    taskId,
+    taskId: updatedTask.id,
+  };
+};
+
+export const checkedTask = (checkedTask) => {
+  return {
+    type: "CHECKED_TASK",
+    checkedTask,
+    taskId: checkedTask.id,
+    isChecked: checkedTask.isChecked,
   };
 };

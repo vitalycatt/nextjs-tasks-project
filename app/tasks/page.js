@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import classnames from "classnames";
 import { useForm } from "react-hook-form";
+import { Checkbox } from "@/components";
 import { useSelector, useDispatch } from "react-redux";
 import { createTask, updateTask, removeTask } from "../../actions";
 
@@ -55,17 +57,25 @@ const TasksPage = () => {
 
       {tasks.map((task) => (
         <div
-          className="group flex justify-between items-center h-9 mb-2"
+          className="relative group flex justify-between items-center h-9 mb-2"
           key={task.id}
         >
+          <Checkbox task={task} />
+
           <div className="mr-5 text-lg">{task.id + 1}.</div>
 
-          <div className="w-full mr-5 text-xl italic">{task.taskMessage}</div>
+          <div
+            className={classnames("w-full mr-5 text-xl italic", {
+              "line-through": task.isChecked,
+            })}
+          >
+            {task.taskMessage}
+          </div>
 
           <div className="group-hover:flex items-center justify-center hidden">
             <button
               className="px-2 py-[6px] mr-2 rounded-l rounded-bl-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
-              onClick={() => dispatch(updateTask(task, task.id))}
+              onClick={() => dispatch(updateTask(task))}
             >
               edit
             </button>
