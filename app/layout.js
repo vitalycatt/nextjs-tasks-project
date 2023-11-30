@@ -17,10 +17,7 @@ const kanit = Kanit({
 
 const RootLayout = ({ children }) => {
   const pathname = usePathname();
-  const store = createStore(
-    allReducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  const store = createStore(allReducers);
 
   return (
     <html lang="en">
