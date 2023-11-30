@@ -36,8 +36,8 @@ const TasksPage = () => {
       className="w-[600px] flex flex-col items-stretch m-auto"
       onSubmit={handleSubmit(onCreateTask)}
     >
-      <h1 className="mb-6 text-2xl font-medium italic">
-        <span className="underline">Tasks</span> page!
+      <h1 className="mb-6 text-2xl font-medium uppercase italic">
+        <span className="underline">Tasks</span> page
       </h1>
 
       <div className="flex justify-between items-center mb-5">
@@ -55,40 +55,58 @@ const TasksPage = () => {
         </button>
       </div>
 
-      {tasks.map((task) => (
-        <div
-          className="relative group flex justify-between items-center h-9 mb-2"
-          key={task.id}
-        >
-          <Checkbox task={task} />
-
-          <div className="mr-5 text-lg">{task.id + 1}.</div>
-
+      {tasks.length > 0 ? (
+        tasks.map((task) => (
           <div
-            className={classnames("w-full mr-5 text-xl italic", {
-              "line-through": task.isChecked,
-            })}
+            className="relative group flex justify-between items-center h-9 mb-2"
+            key={task.id}
           >
-            {task.taskMessage}
+            <Checkbox task={task} />
+
+            <div className="mr-5 text-lg">{task.id + 1}.</div>
+
+            <div
+              className={classnames("w-full mr-5 text-xl italic", {
+                "line-through": task.isChecked,
+              })}
+            >
+              {task.taskMessage}
+            </div>
+
+            <div className="group-hover:flex items-center justify-center hidden">
+              <button
+                className="px-2 py-[6px] mr-2 rounded-l rounded-bl-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
+                onClick={() => dispatch(updateTask(task))}
+              >
+                edit
+              </button>
+
+              <button
+                className="px-2 py-[6px] rounded-r-md rounded-br-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
+                onClick={() => dispatch(removeTask(task))}
+              >
+                del
+              </button>
+            </div>
           </div>
-
-          <div className="group-hover:flex items-center justify-center hidden">
-            <button
-              className="px-2 py-[6px] mr-2 rounded-l rounded-bl-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
-              onClick={() => dispatch(updateTask(task))}
-            >
-              edit
-            </button>
-
-            <button
-              className="px-2 py-[6px] rounded-r-md rounded-br-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
-              onClick={() => dispatch(removeTask(task))}
-            >
-              del
-            </button>
+        ))
+      ) : (
+        <div>
+          <div className="text-3xl uppercase italic">
+            It&apos;s time to create first task {`:)`}
           </div>
         </div>
-      ))}
+      )}
+
+      {tasks.length > 0 && (
+        <div className="mt-4">
+          <hr className="h-0 mb-2 border-b-1 border-black border-solid" />
+
+          <div className="ml-auto text-medium uppercase italic">
+            Total tasks: {tasks.length}
+          </div>
+        </div>
+      )}
     </form>
   );
 };

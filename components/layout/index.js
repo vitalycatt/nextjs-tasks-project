@@ -5,8 +5,8 @@ const Layout = ({ children, pathname }) => {
   return (
     <>
       <header className="flex items-center justify-between pt-6 mb-6 mx-20">
-        <h1 className="font-extralight italic text-2xl">
-          U can put your logo here
+        <h1 className="font-extralight uppercase italic text-2xl">
+          U can put your logo here {`:)`}
         </h1>
 
         <div className="flex items-center justify-end font-medium italic text-lg">
