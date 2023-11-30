@@ -1,22 +1,4 @@
-const data = [
-  {
-    id: 0,
-    taskMessage: "Make todo app",
-    isChecked: true,
-  },
-  {
-    id: 1,
-    taskMessage: "Finish work with todo app",
-    isChecked: false,
-  },
-  {
-    id: 2,
-    taskMessage: "Finish work",
-    isChecked: true,
-  },
-];
-
-export const tasksReducer = (state = data, action) => {
+export const tasksReducer = (state = [], action) => {
   switch (action.type) {
     case "CREATE_TASK":
       return [...state, action.createdTask];

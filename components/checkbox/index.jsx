@@ -8,8 +8,8 @@ const Checkbox = ({ task, className }) => {
   return (
     <div
       className={classnames(
-        "absolute group-hover:flex hidden -left-10 inline-flex items-center",
-        [className]
+        "absolute group-hover:flex  -left-10 inline-flex items-center",
+        { className, flex: task.isChecked, hidden: !task.isChecked }
       )}
     >
       <label

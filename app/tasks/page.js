@@ -1,6 +1,5 @@
 "use client";
 
-// import { useEffect } from "react";
 import classnames from "classnames";
 import { useForm } from "react-hook-form";
 import { Checkbox } from "@/components";
@@ -24,12 +23,6 @@ const TasksPage = () => {
       reset();
     }
   };
-
-  // useEffect(() => {
-  //   fetch("https://jsonplaceholder.typicode.com/posts/1")
-  //     .then((response) => response.json())
-  //     .then((json) => console.log(json));
-  // }, []);
 
   return (
     <form
@@ -61,7 +54,7 @@ const TasksPage = () => {
             className="relative group flex justify-between items-center h-9 mb-2"
             key={task.id}
           >
-            <Checkbox task={task} />
+            <Checkbox task={task} className="bg-white" />
 
             <div className="mr-5 text-lg">{task.id + 1}.</div>
 
