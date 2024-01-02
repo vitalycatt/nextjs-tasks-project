@@ -4,6 +4,8 @@ const HomePage = () => {
       <h1 className="mb-6 text-2xl font-medium uppercase italic">
         <span className="underline">Home</span> page
       </h1>
+
+      <div>Home page</div>
     </div>
   );
 };
