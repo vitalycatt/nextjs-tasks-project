@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost:5050/api";
+export const API_URL = "https://tasks-project-backend.vercel.app/api";
