@@ -1,28 +1,53 @@
 "use client";
-
 import classnames from "classnames";
 import { useForm } from "react-hook-form";
-import { Checkbox } from "@/components";
-import { useSelector, useDispatch } from "react-redux";
-import { createTask, updateTask, removeTask } from "../../actions";
+import {
+  useTasks,
+  useNewTasks,
+  useUpdateTask,
+  useDeleteTask,
+} from "@/api/tasks";
+// import { Checkbox } from "@/components";
+// import { updateTask, removeTask } from "@/actions";
+// import { createTask, useSelector, useDispatch } from "react-redux";
 
 const TasksPage = () => {
-  const tasks = useSelector((state) => state.tasks);
-  const dispatch = useDispatch();
+  // const tasks = useSelector((state) => state.tasks);
+  // const dispatch = useDispatch();
+
+  const tasks = useTasks();
+  const deleteTask = useDeleteTask();
+  const updateTask = useUpdateTask();
+  const createNewTask = useNewTasks();
 
   const { reset, register, handleSubmit } = useForm();
 
-  const onCreateTask = (data) => {
-    const taskDataPrepatation = {
-      id: tasks.length,
-      taskMessage: data.todoCreator,
-    };
+  const onCreateTask = async (data) => {
+    // const taskDataPrepatation = {
+    //   id: tasks.length,
+    //   taskMessage: data.todoCreator,
+    // };
 
     if (data.todoCreator) {
-      dispatch(createTask(taskDataPrepatation));
+      const taskPreparing = {
+        title: data.todoCreator,
+      };
+      await createNewTask.mutateAsync(taskPreparing);
       reset();
+      // dispatch(createTask(taskDataPrepatation));
     }
   };
+
+  const onEditTask = async (task) => {
+    const editTaskMessage = prompt("Write your task desctiption");
+    const taskPreparing = {
+      ...task,
+      title: editTaskMessage,
+    };
+    await updateTask.mutateAsync(taskPreparing);
+  };
+
+  if (tasks.isLoading) return null;
 
   return (
     <form
@@ -48,35 +73,37 @@ const TasksPage = () => {
         </button>
       </div>
 
-      {tasks.length > 0 ? (
-        tasks.map((task) => (
+      {tasks.data.length > 0 ? (
+        tasks.data.map((task, index) => (
           <div
             className="relative group flex justify-between items-center h-9 mb-2"
-            key={task.id}
+            key={task._id}
           >
-            <Checkbox task={task} className="bg-white" />
+            {/* <Checkbox task={task} className="bg-white" /> */}
 
-            <div className="mr-5 text-lg">{task.id + 1}.</div>
+            <div className="mr-5 text-lg">{index + 1}.</div>
 
             <div
               className={classnames("w-full mr-5 text-xl italic", {
                 "line-through": task.isChecked,
               })}
             >
-              {task.taskMessage}
+              {task.title}
             </div>
 
             <div className="group-hover:flex items-center justify-center hidden">
               <button
                 className="px-2 py-[6px] mr-2 rounded-l rounded-bl-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
-                onClick={() => dispatch(updateTask(task))}
+                onClick={() => onEditTask(task)}
+                // onClick={() => dispatch(updateTask(task))}
               >
                 edit
               </button>
 
               <button
                 className="px-2 py-[6px] rounded-r-md rounded-br-md border border-black border-solid -skew-x-12 font-semibold italic text-base hover:underline"
-                onClick={() => dispatch(removeTask(task))}
+                onClick={() => deleteTask.mutate(task._id)}
+                // onClick={() => dispatch(removeTask(task))}
               >
                 del
               </button>
@@ -91,12 +118,12 @@ const TasksPage = () => {
         </div>
       )}
 
-      {tasks.length > 0 && (
+      {tasks.data.length > 0 && (
         <div className="mt-4">
           <hr className="h-0 mb-2 border-b-1 border-black border-solid" />
 
           <div className="ml-auto text-medium uppercase italic">
-            Total tasks: {tasks.length}
+            Total tasks: {tasks.data.length}
           </div>
         </div>
       )}
